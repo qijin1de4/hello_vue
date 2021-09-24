@@ -5,24 +5,30 @@
   <div  class=" w-100 navbar-text ml-auto d-flex justify-content-end position-relative">
     <div class="mr-auto d-flex align-items-end flex-column bd-highlight mb-3 position-absolute" >
       <div class="mb-2">
-        <span class="font-weight-bold bg-white"> {{ currency(cartTotal) }}</span>
+        <span class="font-weight-bold bg-white" :class="totalColor"> {{ currency(cartTotal) }}</span>
         <button
-          class="btn btn-sm ml-3"
+          class="btn btn-success btn-sm ml-3"
           id="cartDropdown"
           aria-haspopup="true"
           aria-expanded="false"
           @click="displayCart = !displayCart"
-          :class="cartBtn"
+          :style="warningStyle"
         >
-        <i class="fas fa-shopping-cart mr-1"></i>
-          {{ cart.length }}
+        <i class="fas fa-shopping-cart mr-1">
+          {{ cart.length }}</i>
         </button>
       </div>
-      <div v-if="displayCart" class="list-group" aria-labelledby="cartDropdown">
-        <div v-for="(item, index) in cart" :key="index" class="list-group-item d-flex justify-content-between">
-            <div>{{item.name}}</div>
-            <div class="ml-3 font-weight-bold">{{currency(item.price)}}</div>
-        </div>
+      <div class="cartDropdown-clip">
+        <transition name="cartDropdown"
+          @enter="transitionColor" 
+          @after-leave="resetColor" >
+          <div v-if="displayCart" class="list-group" aria-labelledby="cartDropdown">
+            <div v-for="(item, index) in cart" :key="index" class="list-group-item d-flex justify-content-between">
+                <div>{{item.name}}</div>
+                <div class="ml-3 font-weight-bold">{{currency(item.price)}}</div>
+            </div>
+          </div>
+        </transition>
       </div>
     </div>
   </div>
@@ -65,7 +71,13 @@ export default {
       borderStyle: {
         border: '3px solid darkgreen',
         borderRadius: '50%'
-      }
+      },
+      warningStyle: {
+        backgroundColor: 'auto',
+        border: 'transparent'
+      },
+      btnColor: 'btn-success',
+      totalColor:'text-secondary'
     }
   },
   created() {
@@ -81,13 +93,6 @@ export default {
     },
     cartTotal() {
       return this.cart.reduce((inc, item) => Number(item.price)+inc, 0);
-    },
-    cartBtn() {
-      return {
-        'btn-secondary': this.cartTotal < 100,
-        'btn-success': this.cartTotal >=100 && this.cartTotal < 200,
-        'btn-danger': this.cartTotal >=200
-      }
     }
   },
   methods: {
@@ -96,7 +101,32 @@ export default {
     },
     add2Cart(product) {
       this.cart.push(product);
+      if(this.cartTotal > 100) {
+        this.warningStyle.backgroundColor = 'red'
+      }
+    },
+    transitionColor(el) {
+      this.totalColor="text-danger"
+    },
+    resetColor(el) {
+      this.totalColor="text-secondary"
     }
   }
 };
 </script>
+
+<style scoped>
+.cartDropdown-enter-active, .cartDropdown-leave-active {
+  transition: all .5s ease-in-out;
+  transform: auto
+}
+
+.cartDropdown-enter-from, .cartDropdown-leave-to {
+  opacity: 0;
+  transform: translateY(-300px)
+}
+
+.cartDropdown-clip {
+  overflow:hidden
+}
+</style>
