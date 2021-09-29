@@ -12,7 +12,8 @@ import 'animate.css'
 //import App from './App_CssClasses.vue'
 //import App from './App_Animation.vue'
 //import App from './App_Component.vue'
-import App from './App_ComponentEvents.vue'
+//import App from './App_ComponentEvents.vue'
+import App from './App_Slots.vue'
 
 const app = createApp(App);
 

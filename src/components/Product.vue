@@ -1,6 +1,6 @@
 <template>
     <div class="col-1 m-auto">
-      <button class="btn btn-success" :style="borderStyle" @click="$emit('addToCart', item)">+</button>
+      <button class="btn btn-success" @click="$emit('addToCart', item)">+</button>
     </div>
     <div class="col-sm-4">
       <img class="img-fluid d-block" :src="item.image" :alt="item.name">
