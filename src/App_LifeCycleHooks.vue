@@ -27,12 +27,12 @@
   </div>
 </nav>
 
-<section class="container">  
+<section class="container">
   <label for="max-price" class="form-label h2">Max Price (${{max}})</label>
   <div class="badge bg-success ml-3">results: {{filteredProducts.length}}</div>
 
   <input v-model.number="max" type="range" class="form-range" min="0" max="130" >
-  
+
   <div v-for="(item, index) in filteredProducts" :key="item.id" id="item-list" class="row align-items-center">
     <div class="col-1 m-auto">
       <button class="btn btn-success" @click="add2Cart(item)">+</button>
@@ -55,7 +55,7 @@
 
 export default {
   name: 'App',
-  data() {
+  data () {
     return {
       displayCart: false,
       max: 50,
@@ -63,28 +63,28 @@ export default {
       products: []
     }
   },
-  created() {
+  created () {
     fetch('http://hplussport.com/api/products/order/price')
-    .then(response => response.json())
-    .then(data => {
-      this.products = data;
-    })
+      .then(response => response.json())
+      .then(data => {
+        this.products = data
+      })
   },
   computed: {
-    filteredProducts() {
-      return this.products.filter( item => (item.price < this.max));
+    filteredProducts () {
+      return this.products.filter(item => (item.price < this.max))
     },
-    cartTotal() {
-      return this.cart.reduce((inc, item) => Number(item.price)+inc, 0);
+    cartTotal () {
+      return this.cart.reduce((inc, item) => Number(item.price) + inc, 0)
     }
   },
   methods: {
-    currency(value) {
+    currency (value) {
       return `$${Number.parseFloat(value).toFixed(2)}`
     },
-    add2Cart(product) {
-      this.cart.push(product);
+    add2Cart (product) {
+      this.cart.push(product)
     }
   }
-};
+}
 </script>

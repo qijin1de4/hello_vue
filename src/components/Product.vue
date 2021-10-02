@@ -18,11 +18,11 @@
 import Currency from './Currency.vue'
 
 export default ({
-	name:'Product',
-	props: ['item'],
-	emits: ['addToCart'],
-	components: {
-		Currency
-	}
+  name: 'Product',
+  props: ['item'],
+  emits: ['addToCart'],
+  components: {
+    Currency
+  }
 })
 </script>
