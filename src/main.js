@@ -12,5 +12,5 @@ library.add(faShoppingCart);
 
 createApp(App)
   .use(router)
-  .component("fa", faShoppingCart)
+  .component("fa", FontAwesomeIcon)
   .mount("#app");

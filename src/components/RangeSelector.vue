@@ -3,11 +3,12 @@
   <div class="badge bg-success ml-3">results: {{ products.length }}</div>
 
   <input
-    v-model.number="max"
     type="range"
     class="form-range"
     min="0"
     max="130"
+    :value="modelValue"
+    @input="$emit('update:modelValue', $event.target.value)"
   />
 </template>
 
@@ -18,6 +19,6 @@ export default {
       max: 50
     };
   },
-  props: ["products"]
+  props: ["products", "modelValue"]
 };
 </script>
