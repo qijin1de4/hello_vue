@@ -20,8 +20,8 @@
           >
             <fa icon="shopping-cart" />{{ cartQty }}
           </button>
-          <cart-drop-down :cart="cart" :displayCart="displayCart" />
         </div>
+        <cart-drop-down :cart="cart" :displayCart="displayCart" />
       </div>
     </div>
   </nav>
